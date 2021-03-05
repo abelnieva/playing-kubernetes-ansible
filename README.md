@@ -95,7 +95,7 @@ Para inicializar el proyecto debemos ejecutar
 ```
 $ make terraformUp
 ```
-## ¿ Dónde puedo declarar la infrastructura en local ?
+## ¿ Dónde puedo declarar la infrastructura en azure ?
 
 mirar el directorio [terraform](terraform)
 
