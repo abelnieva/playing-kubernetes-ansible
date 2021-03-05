@@ -1,0 +1,92 @@
+---
+- name: configuramos kubeadm
+  command: "/usr/bin/kubeadm config images pull"
+  become: yes
+
+- name: Check if Kubernetes has already been initialized.
+  stat:
+    path: /etc/kubernetes/admin.conf
+  register: kubernetes_init_stat
+  become: yes
+
+- name: Instalamos el plugin CNI (Container Network Interface)
+  command: "/usr/bin/kubeadm init --pod-network-cidr 192.169.0.0/16 --apiserver-advertise-address 192.168.2.110"
+  register: cni_output
+  become: yes
+  when: not kubernetes_init_stat.stat.exists
+
+- name: imprimir cni output 
+  debug: msg="{{ cni_output.stdout }}"
+  when: not kubernetes_init_stat.stat.exists
+
+- name: Crear /root/.kube  directory
+  file:
+    path: /root/.kube
+    state: directory
+  become: yes
+
+- name: copy config file to profile  
+  command: "/usr/bin/cp -f /etc/kubernetes/admin.conf /root/.kube/config"
+  become: yes
+
+- name: Find user id 
+  command: /usr/bin/id -u
+  register: user_id
+  become: yes
+
+- name: Find group  id 
+  command: /usr/bin/id -g
+  register: group_id
+  become: yes
+
+- name: copy config file to profile  
+  command: "/usr/bin/chown {{user_id.stdout}}:{{group_id.stdout}} /root/.kube/config"
+  become: yes
+
+
+- name:  instalando la SDN 
+  command: "/usr/bin/kubectl apply -f https://docs.projectcalico.org/manifests/tigera-operator.yaml "
+  run_once: true
+  become: yes
+  
+
+- name:  descargar calico recursos custom 
+  command: "/usr/bin/wget https://docs.projectcalico.org/manifests/custom-resources.yaml"
+  become: yes
+
+
+
+- name: set kubernetes repo 
+  template:
+    src: custom-resources.j2
+    dest: /tmp/custom-resources.yaml
+  become : true
+
+
+- name:  Instalamos Calico
+  command: "/usr/bin/kubectl apply -f /tmp/custom-resources.yaml"
+  run_once: true
+  become: yes
+  when:
+    - stage == "local"
+
+- name: Generate join command
+  command: kubeadm token create --print-join-command
+  register: join_command
+  become: yes
+
+- name: copy join command to local file
+  become: false
+  local_action: copy content="{{ join_command.stdout_lines[0] }}" dest="/tmp/join-command"
+
+- name:  Instalamos ingress controller
+  command: "/usr/bin/kubectl apply -f https://raw.githubusercontent.com/haproxytech/kubernetes-ingress/v1.5/deploy/haproxy-ingress.yaml"
+  run_once: true
+  become: yes
+
+- name:  InstalamosCanal
+  command: "/usr/bin/kubectl apply -f https://docs.projectcalico.org/manifests/canal.yaml"
+  run_once: true
+  become: yes
+  when:
+    - stage == "azure"

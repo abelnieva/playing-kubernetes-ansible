@@ -1,0 +1,7 @@
+- name: enable services
+  systemd:
+    name: "nfs-server"
+    state: started
+    enabled: yes
+    masked: no
+  become: yes

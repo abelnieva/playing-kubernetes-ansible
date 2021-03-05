@@ -1,0 +1,9 @@
+- name: enable firewall services 
+  command: "/usr/bin/firewall-cmd --permanent --add-service={{ item }}"
+  with_items: 
+    - "{{ firewall_serivces }}" 
+  become: yes
+
+- name: firewall reload 
+  command: "/usr/bin/firewall-cmd --reload"
+  become: yes

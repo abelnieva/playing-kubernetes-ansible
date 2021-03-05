@@ -1,0 +1,1 @@
+firewall_nodes_ports: ['10250/tcp','30000-32767/tcp', '8285/tcp','8472/tcp']

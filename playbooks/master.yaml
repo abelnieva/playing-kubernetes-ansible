@@ -1,0 +1,11 @@
+---
+- name: Kubernetes Master
+  hosts: all
+  vars_files:
+    - "group_vars/common.yaml"
+    - "group_vars/master.yaml"
+    - "nodes.yaml"
+  gather_facts: false
+  roles:
+    - common
+    - master

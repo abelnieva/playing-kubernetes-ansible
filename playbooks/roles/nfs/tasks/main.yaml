@@ -1,0 +1,6 @@
+---
+- include_tasks: 01-rpms.yaml
+- include_tasks: 02-service.yaml
+- include_tasks: 03-volumesetup.yaml
+- include_tasks: 04-nfs.yaml
+- include_tasks: 05-firewall.yaml

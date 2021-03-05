@@ -1,0 +1,39 @@
+---
+
+- name: agregar usuario  kubeadmin 
+  user:
+    name: kubeadmin
+    shell: /bin/bash
+    create_home: True
+    append: yes
+  become : true
+
+- name: set user as sudoers 
+  template:
+    src: sudoers.j2
+    dest: /etc/sudoers.d/kubeadmin
+  become : true
+
+- name: Crear /home/kubeadmin/.kube  directory
+  file:
+    path: /home/kubeadmin/.kube
+    state: directory
+  become: yes
+
+- name: set password  
+  authorized_key:
+    user: kubeadmin
+    state: present
+    manage_dir: yes
+    key: "{{  public_key }}"
+  become: true 
+
+- name:  copiar kube config file 
+  command: "/usr/bin/cp -f  /etc/kubernetes/admin.conf /home/kubeadmin/.kube/config"
+  become: yes
+
+- name : Set permisos 
+  file:
+   path: /home/kubeadmin/.kube/config
+   owner: kubeadmin
+  become: yes

@@ -1,0 +1,18 @@
+--- 
+nodes: 
+  - 
+    dns: "master master.acme.es"
+    hostname: master
+    ip: "192.168.2.110"
+  - 
+    dns: "worker02 worker02.acme.es5"
+    hostname: worker02
+    ip: "192.168.2.112"
+  - 
+    dns: "nfs nfs.acme.es"
+    hostname: nfs
+    ip: "192.168.2.115"
+  - 
+    dns: "worker01 worker01.acme.es"
+    hostname: worker01'
+    ip: "192.168.2.111"

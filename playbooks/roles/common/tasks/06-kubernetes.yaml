@@ -1,0 +1,19 @@
+- name: set kubernetes repo 
+  template:
+    src: kube.repo
+    dest: /etc/yum.repos.d/kubernetes.repo
+  become : true
+
+- name: install kubernetes 
+  command: "/usr/bin/dnf install -y {{item}} --disableexcludes=kubernetes"
+  become: yes
+  with_items:
+    - "{{kubernetes_pkgs}}"
+
+- name: enable services
+  systemd:
+    name: "kubelet"
+    state: started
+    enabled: yes
+    masked: no
+  become: yes

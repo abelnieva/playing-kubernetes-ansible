@@ -1,0 +1,9 @@
+---
+- name: Despligue de apps 
+  hosts: all
+  vars_files:
+    - "group_vars/apps.yaml"
+    - "nodes.yaml"
+  gather_facts: false
+  roles:
+    - helm

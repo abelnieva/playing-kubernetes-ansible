@@ -1,0 +1,34 @@
+---
+- name: download helm 
+  command: "curl -fsSL -o /tmp/get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3"
+
+- name: instalar  helm 
+  command: "bash /tmp/get_helm.sh"
+
+- name: Add helm repo
+  command: "/usr/local/bin/helm repo add {{ item.name }} {{ item.url }}"
+  with_items:
+    - "{{ helm_charts }}"
+  become: true
+
+- name:  helm repo actualizacion 
+  command: "/usr/local/bin/helm repo update"
+  become: true
+
+- name:  creacion namespaces
+  command: "/usr/bin/kubectl create namespace {{ item }}"
+  with_items:
+    - "{{ namespaces }}"    
+  become: true
+
+- name: Install prod apps
+  command: "/usr/local/bin/helm install {{ item.name }} {{ item.chart_name }} -n produccion"
+  with_items:
+   - "{{ prod_apps }}"
+  become: true 
+
+- name: Install dev apps
+  command: "/usr/local/bin/helm install {{ item.name }} {{ item.chart_name }} -n desarrollo"
+  with_items:
+   - "{{ dev_apps }}"
+  become: true 

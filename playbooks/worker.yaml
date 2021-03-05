@@ -1,0 +1,11 @@
+---
+- name: Kubernetes Worker
+  hosts: all
+  vars_files:
+    - "group_vars/common.yaml"
+    - "group_vars/nodes.yaml"
+    - "nodes.yaml"
+  gather_facts: false
+  roles:
+    - common
+    - nodes

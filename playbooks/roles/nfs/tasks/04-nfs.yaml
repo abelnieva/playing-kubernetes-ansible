@@ -1,0 +1,8 @@
+- name: export nfs 
+  template:
+    src: export.j2
+    dest: /etc/exports 
+  become: true
+- name: reload nfs config 
+  command: /usr/sbin/exportfs -r 
+  become: yes

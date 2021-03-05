@@ -1,0 +1,7 @@
+---
+- include_tasks: 01-repositories.yaml
+- include_tasks: 02-rpms.yaml
+- include_tasks: 03-services.yaml
+- include_tasks: 04-misc.yaml
+- include_tasks: 05-docker.yaml
+- include_tasks: 06-kubernetes.yaml

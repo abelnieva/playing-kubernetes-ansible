@@ -1,0 +1,29 @@
+- name: Reset Cluster
+  command: "{{ item }}"
+  with_items:
+    - kubeadm reset -f
+    - rm -fr /root/.kube
+  become: true
+
+- name: Get token/endpoint/cacerthash for node-kubeadm.yml
+  local_action:
+    module: shell
+    cmd: awk '{printf "%s\n%s\n%s",$3,$5,$7}' /tmp/join-command
+  register: tokenvar
+
+
+
+- name: Generate node-kubeadm.yml
+  vars:
+    - token: "{{ tokenvar.stdout_lines[1] }}"
+    - endpoint: "{{ tokenvar.stdout_lines[0] }}"
+    - cacerthash: "{{ tokenvar.stdout_lines[2] }}" 
+    - node_FQDN: "{{ node }}"
+  template:
+    src: kubeadm_node_join.yml.j2
+    dest: /tmp/node-kubeadm.yml
+  
+
+- name: Join cluster
+  shell: "kubeadm join {{ tokenvar.stdout_lines[0] }} --token {{ tokenvar.stdout_lines[1] }} --discovery-token-ca-cert-hash {{ tokenvar.stdout_lines[2] }} "
+  become: true

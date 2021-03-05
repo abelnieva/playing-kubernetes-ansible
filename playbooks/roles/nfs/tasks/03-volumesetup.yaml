@@ -1,0 +1,41 @@
+---
+- name: Create a volume group on top local
+  lvg:
+    vg: data_vg
+    pvs: "/dev/{{ nfs_physical_device_name }}"
+  become: yes
+  when: stage == "local"
+
+- name: Create a volume group on top local azure
+  lvg:
+    vg: data_vg
+    pvs: "/dev/{{ nfs_physical_device_name_azure }}"
+  become: yes
+  when: stage == "azure"
+
+- name: Create a logical volume
+  lvol:
+    vg: data_vg
+    lv: nfs_lv
+    size: +100%FREE
+  become: yes
+
+- name: Create a ext2 filesystem on
+  filesystem:
+    fstype: xfs
+    dev: /dev/data_vg/nfs_lv
+  become: yes
+
+- name: Creates directory
+  file:
+    path: "/srv/nfs"
+    state: directory
+  become: yes
+
+- name: "mount options for /"
+  mount:
+    path: "/srv/nfs"
+    src: "/dev/data_vg/nfs_lv"
+    fstype: "xfs"
+    state: "mounted"
+  become: yes

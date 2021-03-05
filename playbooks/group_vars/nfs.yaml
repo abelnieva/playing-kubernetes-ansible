@@ -1,0 +1,5 @@
+---
+nfs_physical_device_name: sdb
+nfs_physical_device_name_azure: sdc
+rpms_nfs: ['lvm2','net-tools']
+firewall_serivces: ['nfs','rpc-bind','mountd']

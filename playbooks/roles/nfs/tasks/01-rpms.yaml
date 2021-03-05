@@ -1,0 +1,6 @@
+---
+- name: install packages
+  dnf:
+    name: "{{ rpms_nfs }}"
+    state: latest
+  become: yes

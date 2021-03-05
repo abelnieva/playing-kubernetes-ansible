@@ -1,0 +1,53 @@
+- name: Set timezone time_zone
+  timezone:
+    name: "{{time_zone}}"
+  become: yes
+- name: Enable ntp
+  command: /usr/bin/timedatectl set-ntp true
+  become: yes
+- name: Disable SELinux
+  selinux: state=disabled
+  become: true
+- name: set /etc/resolv.conf  
+  template:
+    src: resolv.j2
+    dest: /etc/hosts
+  become : true
+
+- name: Add the br_netfilter  module
+  modprobe:
+    name: br_netfilter
+    state: present
+  become: yes
+
+- name: Enable br_netfilter
+  command: /usr/sbin/modprobe br_netfilter
+  become: yes
+
+- name: firewall transparent masquerading 
+  command: "firewall-cmd --add-masquerade --permanent"
+  become: yes
+
+- name: firewall reload 
+  command: "/usr/bin/firewall-cmd --reload"
+  become: yes
+
+- name: set /etc/sysctl.d/k8s.conf
+  template:
+    src: k8s.conf
+    dest: /etc/sysctl.d/k8s.conf
+  become : true
+
+- name: sysctl 
+  command: "/usr/sbin/sysctl --system"
+  become: yes
+
+- name: ensure  swap is  off 
+  command: "/usr/sbin/swapoff -a"
+  become: yes
+
+- name: ensure  swap is  not going to be mounted 
+  command: "/usr/bin/sed -i '/swap/d' /etc/fstab"
+  become: yes
+
+
