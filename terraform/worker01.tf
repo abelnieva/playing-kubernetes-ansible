@@ -39,10 +39,8 @@ resource "azurerm_virtual_machine" "worker01" {
     }
   }
 
-  tags = {
-    environment = "staging"
-  }
-  #Auto_Shutdown = "no"
+tags = merge(var.tags, map ("TipoRecurso","Worker01"))
+
 }
 
 resource "null_resource" "worker01" {

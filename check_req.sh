@@ -1,6 +1,7 @@
 #!/bin/bash
 
-
+## verifica que el software requerido de encuentra instalado en el sistema  
+##
 distros=(git vagrant ansible python pip)
 
 for i in "${distros[@]}"

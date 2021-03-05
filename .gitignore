@@ -2,3 +2,4 @@ azcreds.txt
 .terraform
 azcreds.json
 .vagrant
+terraform.tfstate*

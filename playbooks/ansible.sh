@@ -1,5 +1,5 @@
 #!/bin/bash
-#
+# Este script nos permite ejecutar los playbook en el bastion 
 ## Parametros esperados  POSICIONALES 
 ## 1 -  IP 
 ## 2 -  nodename

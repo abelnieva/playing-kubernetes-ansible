@@ -25,7 +25,7 @@ resource "null_resource" "apps" {
 
   provisioner "remote-exec" {
     inline = [
-"bash /tmp/playbooks/apps.sh ${azurerm_network_interface.k8s.private_ip_address} apps apps" # ip / nodename /  tipo de nodo 
+"bash /tmp/playbooks/apps.sh ${azurerm_network_interface.k8s.private_ip_address} ${var.AppEnvToDeploy} apps" # ip / nodename /  tipo de nodo 
     ]
 
   }

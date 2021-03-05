@@ -1,0 +1,14 @@
+---
+- name: Install prod apps
+  command: "/usr/local/bin/helm upgrade --install {{ item.name }} {{ item.chart_name }} -n produccion --create-namespace"
+  with_items:
+   - "{{ prod_apps }}"
+  become: true 
+  when: env == "all"  or env == "produccion"
+
+- name: Install dev apps
+  command: "/usr/local/bin/helm upgrade --install {{ item.name }} {{ item.chart_name }} -n desarrollo --create-namespace "
+  with_items:
+   - "{{ dev_apps }}"
+  become: true 
+  when: env == "all"  or env =="desarrollo"

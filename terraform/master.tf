@@ -38,10 +38,7 @@ resource "azurerm_virtual_machine" "k8s" {
     }
   }
 
-  tags = {
-    environment = "staging"
-  }
-  #Auto_Shutdown = "no"
+tags = merge(var.tags, map ("TipoRecurso","MasterNode"))
 }
 
 resource "null_resource" "master" {

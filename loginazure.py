@@ -2,6 +2,13 @@
 import json 
 import os
 
+"""
+Toma los valores de azcreds.json file y los exporta como variables de entorno 
+
+TODO: 
+Tomar el ARM_SUBSCRIPTION_ID automaticamente 
+"""
+
 
 os.putenv("ARM_SUBSCRIPTION_ID", "cf3e9f6d-fac4-4695-94a8-8d19dd9e753e")
 

@@ -21,7 +21,6 @@ resource "azurerm_virtual_machine" "worker02" {
     caching           = "ReadWrite"
     create_option     = "FromImage"
     managed_disk_type = "Standard_LRS"
-    disk_size_gb = "0"
   }
 
 
@@ -39,10 +38,7 @@ resource "azurerm_virtual_machine" "worker02" {
     }
   }
 
-  tags = {
-    environment = "staging"
-  }
-  #Auto_Shutdown = "no"
+tags = merge(var.tags, map ("TipoRecurso","Worker02"))
 }
 
 resource "null_resource" "worker02" {

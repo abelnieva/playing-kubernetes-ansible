@@ -1,3 +1,5 @@
+## Aqui describimos todos los recursos relacionados al bastion 
+##
 resource "azurerm_network_interface" "bastion" {
   name                = "k8s-bastion"
   location            = azurerm_resource_group.k8s.location
@@ -58,8 +60,5 @@ resource "azurerm_virtual_machine" "bastion" {
     }
   }
 
-  tags = {
-    environment = "staging"
-    Auto_Shutdown = "no"
-  }
+  tags = merge(var.tags, map ("TipoRecurso","Bastion"))
 }

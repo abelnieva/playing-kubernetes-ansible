@@ -5,7 +5,7 @@ helm_charts:
     url: "https://charts.bitnami.com/bitnami"
 
 
-namespaces: ["desarrollo", "produccion"]
+
 prod_apps:
  - 
   name: nginx-server

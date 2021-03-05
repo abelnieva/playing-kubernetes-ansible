@@ -46,10 +46,7 @@ resource "azurerm_virtual_machine" "nfs" {
     }
   }
 
-  tags = {
-    environment = "staging"
-  }
-  #Auto_Shutdown = "no"
+tags = merge(var.tags, map ("TipoRecurso","NFS"))
 }
 
 resource "null_resource" "nfs" {

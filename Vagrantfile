@@ -1,14 +1,14 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
-domain   = 'acme.es'
 
+## La variable nodes dispone de la configuración de los nodos  
 nodes = [
   { :hostname => 'master',   :ip => '192.168.2.110', :box => 'centos/8', :ram => 2000, :dns => 'master master.acme.es'},
   { :hostname => 'worker01',      :ip => '192.168.2.111', :box => 'centos/8', :ram => 1000 , :dns => 'worker01 worker01.acme.es' },
   { :hostname => 'worker02',    :ip => '192.168.2.112', :box => 'centos/8' , :ram => 1000,  :dns => 'worker02 worker02.acme.es5' },
   { :hostname => 'nfs',    :ip => '192.168.2.115', :box => 'centos/8' , :ram => 1000 ,  :dns => 'nfs nfs.acme.es' },
 ]
-
+## crea las maquinas 
 Vagrant.configure("2") do |config|
   nodes.each do |node|
     config.vm.define node[:hostname] do |nodeconfig|
@@ -32,6 +32,8 @@ Vagrant.configure("2") do |config|
    
 
   end
+
+  ## corre los playbook de ansible , hay instrucciones especificas para master , worker y nfs 
 
   nodes.each do | node  |
    case  node[:hostname] 
@@ -66,7 +68,7 @@ Vagrant.configure("2") do |config|
                       ansible.extra_vars = {
                         nodes: nodes,
                         node: node[:hostname],
-                        stage: "local"
+                        stage: "local" ## Esta variable es importante para que los playbook puedan determinar si estan corriendo en azure o localmente
 
                       }
                   end

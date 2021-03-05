@@ -22,8 +22,14 @@ terraformUp:
 terraformDestroy:
 	cd terraform &&  terraform destroy
 
-appsDeploy:
+appsReDeploy:
 	cd terraform && terraform taint null_resource.apps && terraform apply
 
+appsReDeploy produccion:
+	cd terraform && terraform taint null_resource.apps && terraform apply  -var="AppEnvToDeploy=produccion"
 
+appsReDeploy desarrollo:
+	cd terraform && terraform taint null_resource.apps && terraform apply  -var="AppEnvToDeploy=desarrollo"
+terraformRunPlaybooks:
+	cd terraform && terraform taint null_resource.master null_resource.nfs null_resource.worker01 null_resource.worker02 && terraform apply
 	
