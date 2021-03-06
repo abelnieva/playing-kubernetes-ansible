@@ -3,3 +3,5 @@ azcreds.txt
 azcreds.json
 .vagrant
 terraform.tfstate*
+key
+key.pub
