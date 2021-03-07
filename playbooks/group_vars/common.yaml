@@ -11,4 +11,4 @@ time_zone: "Europe/Madrid"
 
 kubernetes_pkgs: ['kubelet', 'kubeadm', 'kubectl']
 
-public_key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDHm5ct4nDwOof5o5DzRrOrbyC1Lyay2BUNiluQLcaScoh9TLRfHbI8Si2Yj4LJw6qpr29+PjDnRy3wZWAXumhCjky9qgWBgOQaUoUzHddkMkg2LxiRMuTEN92DWr9TmWQ2+2pf2JrX+IneiwhLqsBiq4xQjOojvWbldtH9boV0P+lIBIenG0ZIR8P7eJhY578h9VM7qr8OsLqB5/Fm72UmYjBZYIyDq/wFfiro+ZTSD8jBqLEiGG7O3X1xjoD8eSYU4HSMWuAL8Z2qfqYEuq/WQ2NOqZj171WBwztWnsNz4UVcoGqFVLMI047QfJvK/eoQA9H+8gLpQlAyP5Owf58N abel@abelLaptop"
+public_key: "AGREGAR LA CLAVE PUBLICA"

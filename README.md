@@ -103,6 +103,7 @@ mirar el directorio [terraform](terraform)
 
 Este par de claves son importantes para que terraform pueda conectarse al basion , y eventualmente nosotros tambien lo podremos hacer. 
 
+Nota: versión local se puede agregar la clave publica en playbooks/group_vars/common.yaml para poder acceder 
 ```
 $ make setupSshKeyPair
 ```
