@@ -106,6 +106,7 @@ Mirar el directorio [terraform](terraform).
 
 Este par de claves son importantes para que Terraform pueda conectarse al bastión, y eventualmente nosotros tambien lo podremos hacer:
 
+Nota: versión local se puede agregar la clave publica en playbooks/group_vars/common.yaml para poder acceder a los nodos 
 ```
 $ make setupSshKeyPair
 ```
