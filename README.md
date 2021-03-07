@@ -1,13 +1,13 @@
-# Despligue de cluster kubernetes en con Ansible, terraform , Vagrant 
+# Despliegue de cluster Kubernetes con Ansible, Terraform y Vagrant.
 
-Este repositorio fue creado inicialmente como resolucion del Trabajo prático 2 de Experto univesitario de  UNIR 
+Este repositorio fué creado inicialmente como resolución del Trabajo práctico Nº. 2 de Experto Univesitario de UNIR. 
 
-## Despligue de componentes 
+## Despliegue de componentes 
 
 ![infra](imgs/infra.png)
  
  -----------------------------------------------------------------
-| Role | Sistema Operativo | vCPUs | Memoria (GiB) | Disco Duro |  DNS | IP |
+| Rol | Sistema Operativo | vCPUs | Memoria (GiB) | Disco Duro |  DNS | IP |
 |------|-------------------|-------|---------------|------------| ----------- | --------------|
 | NFS  | CentOS 8.3          | 2     | 4             | 1 x 20 GiB (boot), 1 x 10 GiB (data) | nfs.acme.es  | 192.168.2.115/24
 | Master | CentOS 8.3        | 2     | 8             | 1 x 20 GiB (boot) | master.acme.es  | 192.168.2.110/24
@@ -15,29 +15,32 @@ Este repositorio fue creado inicialmente como resolucion del Trabajo prático 2 
 | Worker02 | CentOS 8.3        | 2     | 4             | 1 x 20 GiB (boot) |  worker02.acme.es | 192.168.2.112/24 | 
 | Bastion | CentOS 8.3        | 2     | 4             | 1 x 20 GiB (boot) |  n/a | n/a | 
 
-Nota el bastion solo se despliega en la nube. 
-## Requerimientos software
-Para la versión local 
 
-* Virtual Box
-* Vagrant 
-* Ansible 
-* python
+Nota: El bastión solo se despliega en la nube. 
 
-Para la versión en azure 
-* Ansible 
-* terraform 
-* azure cli 
-* python
+## Requerimientos de software
 
-Para verificar los requerimientos podemos usar ejecutar 
+Para la versión local: 
+
+* Virtual Box.
+* Vagrant. 
+* Ansible. 
+* Python.
+
+Para la versión en Azure:
+* Ansible. 
+* Terraform.
+* Azure cli. 
+* Python.
+
+Para verificar los requerimientos podemos usar ejecutar: 
 
 ```
 $ make checkReq
 ```
-## ¿ Dónde puedo declarar la infrastructura en local ?
+## ¿Dónde puedo declarar la infrastructura en local?
 
-El archivo [Vagrantfile](Vagrantfile) dispone de una variable 
+El archivo [Vagrantfile](Vagrantfile) dispone de una variable:
 ```
 nodes = [
   { :hostname => 'master',   :ip => '192.168.2.110', :box => 'centos/8', :ram => 2000, :dns => 'master master.acme.es'},
@@ -47,30 +50,30 @@ nodes = [
 ]
 ```
 
-## Despligue local (Vagrant & VirtualBox )
+## Despliegue local (Vagrant & VirtualBox )
 
 ```
 $ make local up
 ```
 
-## Despligue local (ansible)
+## Despliegue local (Ansible)
 
 ```
 $ make local softwareInstall
 ```
 
 
-## Despligue en azure 
+## Despliegue en Azure 
 
-Creación de la cuenta de azure. 
+Creación de la cuenta de Azure. 
 
 ## Configuración de credenciales 
 
 Recomendamos seguir los siguientes [pasos](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/guides/service_principal_client_secret) para la creación de la service principal account. 
 
-Los datos de logueos se deben guardar en un archivo llamado azcreds.json, de esta manera el siguente comando configurara tu shell para su uso. 
+Los datos de logueos se deben guardar en un archivo llamado *azcreds.json*, de esta manera el siguiente comando configurará tu shell para su uso. 
 
-Ejemplo  del archivo json de credenciales  
+Ejemplo  del archivo json de credenciales: 
 
 ```
 {
@@ -89,33 +92,33 @@ $ make azuresetupCreds
 
 ## Terraform 
 
-Para inicializar el proyecto debemos ejecutar 
+Para inicializar el proyecto debemos ejecutar: 
 
 
 ```
 $ make terraformUp
 ```
-## ¿ Dónde puedo declarar la infrastructura en azure ?
+## ¿Dónde puedo declarar la infrastructura en Azure?
 
-mirar el directorio [terraform](terraform)
+Mirar el directorio [terraform](terraform).
 
-## Generación ssh keypair 
+## Generación de SSH keypair 
 
-Este par de claves son importantes para que terraform pueda conectarse al basion , y eventualmente nosotros tambien lo podremos hacer. 
+Este par de claves son importantes para que Terraform pueda conectarse al bastión, y eventualmente nosotros tambien lo podremos hacer:
 
 ```
 $ make setupSshKeyPair
 ```
 
 
-## Automatizaciones con terraform 
-Si queremos hacer un plan de cambios 
+## Automatizaciones con Terraform 
+Si queremos hacer un plan de cambios: 
 
 ```
 $ make terraformPlan
 ```
 
-o simplemente podemos destruir todo con el siguiente comando 
+O simplemente podemos destruir todo con el siguiente comando: 
 
 
 ```
@@ -124,19 +127,19 @@ $ make terraformDestroy
 
 ## Ansible  
 
-Si quisieramos que terraform aplique cambios realizados a los playbook 
+Si quisiéramos que Terraform aplique cambios realizados a los playbook: 
 
 ```
 $ make terraformRunPlaybooks 
 ```
 
-## Despligue de apps en kubernetes 
+## Despliegue de apps en Kubernetes: 
 
 ```
 $ make appsReDeploy 
 ```
 
-Si deseamos desplegar cambios en apps por entorno 
+Si deseamos desplegar cambios en apps por entorno:
 
 
 ```
